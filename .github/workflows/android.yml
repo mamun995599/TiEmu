@@ -56,10 +56,28 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      # Point AGP to the exact NDK we installed (a wrong ANDROID_NDK_HOME breaks the build)
+      - name: Select NDK 21.4.7075529
+        run: echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/21.4.7075529" >> "$GITHUB_ENV"
+
       - name: Build debug + release APK
-        env:
-          ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/21.4.7075529
-        run: ./gradlew --no-daemon assembleDebug assembleRelease
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon --console=plain assembleDebug assembleRelease 2>&1 | tee build.log
+
+      - name: Show only the real errors (if build failed)
+        if: failure()
+        run: |
+          grep -n -E "error:|undefined reference|\*\*\* |FAILED|What went wrong|Execution failed|not found|No such file" build.log | grep -v "Wno-error" | head -80 || true
+          echo "-------- last 60 lines --------"
+          tail -60 build.log
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TiEmu-build-log
+          path: build.log
 
       - name: Sign release APK (only if keystore secrets are set)
         if: ${{ env.KEYSTORE_BASE64 != '' }}
