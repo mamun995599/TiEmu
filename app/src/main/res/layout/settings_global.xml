@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seek="org.tiemu.controls.SeekBarPreference"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="Application settings" >
+    </PreferenceCategory>
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="hide_statusbar"
+        android:summary="Hide the top system status bar"
+        android:title="Hide status bar" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="keep_screen_on"
+        android:summary="Always keep the screen on when the calculator is shown"
+        android:title="Keep screen on" />
+
+    <org.tiemu.controls.SeekBarPreference
+        android:dependency="keep_screen_on"
+        android:defaultValue="5"
+        android:dialogTitle="Emulator timeout"
+        android:key="auto_off"
+        android:persistent="true"
+        android:summary="Turn off the emulator after an interval of inactivity"
+        android:title="Auto Off"
+        seek:maxValue="60"
+        seek:minValue="0" />
+
+    <org.tiemu.controls.SeekBarPreference
+        android:defaultValue="8"
+        android:dialogTitle="Set duration"
+        android:key="haptic_feedback"
+        android:persistent="true"
+        android:summary="Key vibration"
+        android:title="Haptic Feedback"
+        seek:maxValue="30"
+        seek:minValue="0" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="audio_feedback"
+        android:summary="Make a click sound on key press"
+        android:title="Acoustic Feedback" />
+
+</PreferenceScreen>

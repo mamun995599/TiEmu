@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.tiemu">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="TiEmu"
+        android:theme="@style/TiEmuTheme"
+        android:requestLegacyExternalStorage="true"
+        android:allowBackup="true">
+        <activity
+            android:name="org.tiemu.emulationcore.EmulatorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.tiemu.emulationcore.RomManagerActivity"
+            android:label="ROM Manager" />
+        <activity
+            android:name="org.tiemu.controls.FilePickerActivity"
+            android:label="Add ROM" />
+        <activity
+            android:name="org.tiemu.emulationcore.InstanceConfigurationPage"
+            android:label="ROM Configuration" />
+        <activity
+            android:name="org.tiemu.emulationcore.GlobalConfigurationPage"
+            android:label="Settings" />
+        <activity
+            android:name="org.tiemu.emulationcore.BackupManager"
+            android:label="Backup Manager" />
+    </application>
+
+</manifest>
